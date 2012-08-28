@@ -1,14 +1,12 @@
-use File::Spec;
-use File::Basename qw(dirname);
-my $basedir = File::Spec->rel2abs(File::Spec->catdir(dirname(__FILE__), '..'));
-my $dbpath;
-if ( -d '/home/dotcloud/') {
-    $dbpath = "/home/dotcloud/deployment.db";
-} else {
-    $dbpath = File::Spec->catfile($basedir, 'db', 'deployment.db');
-}
+use Path::Class;
+my $basedir = file(__FILE__)->parent->parent;
+my $dotcloud = dir('/home/dotcloud');
+my $dbpath = -d $dotcloud ? $dotcloud->file('deployment.db')
+    : $basedir->file('db', 'deployment.db');
+my $imgpath = dir('/Library/WebServer/Documents/blog/assets_c');
+-d $imgpath or die;
 +{
-    'DBI' => [
+    DBI => [
         "dbi:SQLite:dbname=$dbpath",
         '',
         '',
@@ -16,4 +14,5 @@ if ( -d '/home/dotcloud/') {
             sqlite_unicode => 1,
         }
     ],
+    IMGPATH => $imgpath->stringify,
 };
