@@ -1,0 +1,20 @@
+[% WRAPPER 'include/layout.tt' %]
+
+[% IF result.has_error %]
+    [% FOREACH msg IN result.messages(action) %]
+    <p>[% msg %]</p>
+    [% END %]
+[% END %]
+
+[% IF result.has_error %]
+<ul>
+    [% FOREACH key IN result.error %]
+        [% FOREACH type IN result.error(key) %]
+        <li>invalid: [% key %] - [% type %]</li>
+        [% END %]
+    [% END %]
+</ul>
+[% END %]
+
+[% END %]
+

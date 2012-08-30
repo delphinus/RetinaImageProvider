@@ -1,0 +1,16 @@
+---
+#get_img:
+  #auto:
+    #- arg1
+    #- UINT
+    #- arg1
+    #- NOT_BLANK
+  #logic:
+    #module: Image
+    #methods:
+      ##- get_img
+get_img:
+  logic:
+    module: Image
+    methods:
+      - get_img

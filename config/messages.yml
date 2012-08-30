@@ -1,0 +1,10 @@
+---
+DEFAULT: ~
+get_img:
+  width:
+    NO_WIDTH: 画像の幅が指定されていません。
+  height:
+    NO_HEIGHT: 画像の高さが指定されていません。
+  img:
+    NOT_EXIST: ファイルが存在しません。
+    CANNOT_DETECT: ファイル形式が不明です。

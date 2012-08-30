@@ -1,36 +1,37 @@
 package RetinaImageProvider::Web::Dispatcher;
 use common::sense;
 use Amon2::Web::Dispatcher::Lite;
-use RetinaImageProvider;
+use RetinaImageProvider::Logic::Image;
 
-use Log::Minimal;
 use Path::Class;
 
-my $app = RetinaImageProvider->new;
-
-any '/' => sub {
-    my ($c) = @_;
-    $c->render('index.tt');
-};
-
-get '/get/{img:.*}' => sub { my ( $c, $args ) = @_; #{{{
-    my $img = $app->imgpath->file($args->{img});
-    my ($ext) = $img =~ /\.([^.]+)$/;
-    if (defined $ext and -f $img) {
-        my $content;
-        eval { $content = $img->slurp; };
-        if (!$@ and defined $content and $content ne '') {
-            return $c->create_response(
-                200,
-                [
-                    'Content-Type' => 'img/' . lc($ext),
-                    'Content-Length' => -s $img,
-                ],
-                [$content],
-            );
-        }
+get '/{img:.*}' => sub { my ( $c, $args ) = @_; #{{{
+    my $action = 'get_img';
+    $c->validate($action, $args);
+    if ($c->form->has_error) {
+        return $c->error_page($action);
     }
-    $c->res_404;
+
+    my $logic = RetinaImageProvider::Logic::Image->new(
+        width => $c->req->header('X-RetinaImageProvider-Width'),
+        height => $c->req->header('X-RetinaImageProvider-Height'),
+        img => $args->{img},
+    );
+
+    my $data = $logic->get;
+
+    if ($data->{result} eq 'success') {
+        $c->create_response(
+            200,
+            [
+                'Content-Type' => $data->{content_type},
+                'Content-Length' => $data->{content_length},
+            ],
+            [$data->{content}],
+        );
+    } else {
+        $c->res_404;
+    }
 }; #}}}
 
 1;

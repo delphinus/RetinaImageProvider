@@ -2,6 +2,8 @@ package RetinaImageProvider;
 use common::sense;
 use parent qw/Amon2/;
 use Path::Class;
+use DBIx::Simple;
+use SQL::Abstract;
 our $VERSION='0.01';
 use 5.008001;
 
@@ -19,6 +21,14 @@ sub setup_schema {
         $dbh->do($stmt) or die $dbh->errstr();
     }
 }
+
+sub sql { my ( $self ) = @_; #{{{
+    return SQL::Abstract->new;
+} #}}}
+
+sub ds { my ( $self ) = @_; #{{{
+    return DBIx::Simple->new($self->dbh);
+} #}}}
 
 sub imgpath { my ( $self ) = @_; #{{{
     return dir($self->config->{IMGPATH});
