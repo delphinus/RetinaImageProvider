@@ -5,8 +5,8 @@ use Path::Class;
 
 use Log::Minimal;
 sub get_img { my ( $self, $c, $args ) = @_; #{{{
-    my $width = $c->req->header('X-RetinaImageProvider-Width');
-    my $height = $c->req->header('X-RetinaImageProvider-Height');
+    my $width = $c->req->param('w');
+    my $height = $c->req->param('h');
     infof($width);
     infof($height);
     infof($args->{img});

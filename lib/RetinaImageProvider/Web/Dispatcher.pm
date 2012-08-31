@@ -13,8 +13,8 @@ get '/{img:.*}' => sub { my ( $c, $args ) = @_; #{{{
     }
 
     my $logic = RetinaImageProvider::Logic::Image->new(
-        width => $c->req->header('X-RetinaImageProvider-Width'),
-        height => $c->req->header('X-RetinaImageProvider-Height'),
+        width => $c->req->param('w'),
+        height => $c->req->param('h'),
         img => $args->{img},
     );
 
