@@ -7,7 +7,6 @@ var Page = function(){};
 Page.prototype = {
     opt: {
         $entry: $('.entry-content')
-        ,maxWidth: $entry.width()
         ,url: 'http://rip.remora.cx/'
         ,isRetina: window.devicePixelRatio === 2
     }
@@ -25,7 +24,7 @@ Page.prototype = {
                 ,reqHeight = targetHeight * (self.opt.isRetina ? 2 : 1)
             ;
 
-            if ($this.width() <= self.opt.maxWidth) {
+            if ($this.width() <= self.opt.$entry.width()) {
                 return;
             }
 
