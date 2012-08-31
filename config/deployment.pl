@@ -14,6 +14,7 @@ my $imgpath = $basedir->subdir('img');
             #sqlite_unicode => 1,
         }
     ],
+    LOG => $basedir->file('logs/app.log'),
     IMGPATH => $imgpath->stringify,
     validator => +{
         messages => $basedir->file('config', 'messages.yml')->stringify,

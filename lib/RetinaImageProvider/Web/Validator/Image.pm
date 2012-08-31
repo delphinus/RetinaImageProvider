@@ -3,13 +3,9 @@ use common::sense;
 use parent qw!RetinaImageProvider::Web::Validator!;
 use Path::Class;
 
-use Log::Minimal;
 sub get_img { my ( $self, $c, $args ) = @_; #{{{
     my $width = $c->req->param('w');
     my $height = $c->req->param('h');
-    infof($width);
-    infof($height);
-    infof($args->{img});
 
     if (defined $width && $width =~ /^\d+$/) {
         $c->set_invalid_form(width => 'TOO_LARGE')

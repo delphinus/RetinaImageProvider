@@ -12,9 +12,11 @@ get '/{img:.*}' => sub { my ( $c, $args ) = @_; #{{{
         return $c->error_page($action);
     }
 
+    my $p = $c->req->parameters;
+
     my $logic = RetinaImageProvider::Logic::Image->new(
-        width => $c->req->param('w'),
-        height => $c->req->param('h'),
+        width => $p->{w},
+        height => $p->{h},
         img => $args->{img},
     );
 
