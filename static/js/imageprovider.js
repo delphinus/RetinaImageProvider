@@ -34,6 +34,8 @@ Page.prototype = {
                 ,width: targetWidth
             });
         })
+
+        return self;
     }
 };
 
