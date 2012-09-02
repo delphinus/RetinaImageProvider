@@ -8,3 +8,5 @@ get_img:
   img:
     NOT_EXIST: ファイルが存在しません。
     CANNOT_DETECT: ファイル形式が不明です。
+    TOO_LONG: ファイル名が長すぎます。
+    NO_IMG: ファイル名が指定されていません。

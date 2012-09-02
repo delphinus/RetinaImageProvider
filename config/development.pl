@@ -18,7 +18,6 @@ my $imgpath = $basedir->subdir('img');
     IMGPATH => $imgpath->stringify,
     validator => +{
         messages => $basedir->file('config', 'messages.yml')->stringify,
-        profiles => $basedir->file('config', 'profiles.yml')->stringify,
         message_decode_from => 'UTF-8',
     },
 };
