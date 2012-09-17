@@ -11,7 +11,8 @@ get '/{img:.*}' => sub { my ( $c, $args ) = @_; #{{{
     my $validator = RetinaImageProvider::Web::Validator::Image->new;
     $validator->$action($c, $args);
     if ($c->form->has_error) {
-        return $c->render('error.tt', +{action => $action});
+        #return $c->render('error.tt', +{action => $action});
+        return $c->res_404;
     }
 
     my $p = $c->req->parameters;
