@@ -1,15 +1,15 @@
 [% WRAPPER 'include/layout.tt' %]
 
-[% IF result.has_error %]
-    [% FOREACH msg IN result.messages(action) %]
+[% IF c().form().has_error %]
+    [% FOREACH msg IN c().form().messages(action) %]
     <p>[% msg %]</p>
     [% END %]
 [% END %]
 
-[% IF result.has_error %]
+[% IF c().form().has_error %]
 <ul>
-    [% FOREACH key IN result.error %]
-        [% FOREACH type IN result.error(key) %]
+    [% FOREACH key IN c().form().error %]
+        [% FOREACH type IN c().form().error(key) %]
         <li>invalid: [% key %] - [% type %]</li>
         [% END %]
     [% END %]

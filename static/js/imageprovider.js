@@ -40,11 +40,19 @@ Page.prototype = {
             // パスからホスト名を取る
             imgpath = imgpath.replace('http://', '').replace(location.host, '');
 
+            var $window = $(window)
                 // 画像の現在の大きさ
-            var width = $this.attr('width')
+                ,width = $this.attr('width')
                 ,height = $this.attr('height')
                 // 目標の大きさ
-                ,targetWidth = $this.parent().width()
+                ,targetWidth = (function(){
+                    var w = $this.parent().width();
+                    if (w > $window.width() - 20) {
+                        w = $window.width() - 20;
+                    }
+
+                    return w;
+                })()
                 ,targetHeight = Math.floor(targetWidth * height / width)
                 // Retina なら 2 倍にする
                 ,reqWidth = targetWidth * (self.opt.isRetina ? 2 : 1)

@@ -2,14 +2,17 @@ package RetinaImageProvider::Web::Dispatcher;
 use common::sense;
 use Amon2::Web::Dispatcher::Lite;
 use RetinaImageProvider::Logic::Image;
+use RetinaImageProvider::Web::Validator::Image;
 
 use Path::Class;
 
 get '/{img:.*}' => sub { my ( $c, $args ) = @_; #{{{
     my $action = 'get_img';
-    $c->validate($action, $args);
+    my $validator = RetinaImageProvider::Web::Validator::Image->new;
+    $validator->$action($c, $args);
     if ($c->form->has_error) {
-        return $c->error_page($action);
+        #return $c->render('error.tt', +{action => $action});
+        return $c->res_404;
     }
 
     my $p = $c->req->parameters;
